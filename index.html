@@ -46,26 +46,28 @@
       align-items: flex-start;
     }
 
-    /* Search Box */
+    /* Search Box (now square) */
     .search-box {
       width: 40px;
       height: 40px;
-      background: #000; /* black background for the circle */
-      border-radius: 50%; /* make it circular */
+      background: #fff; /* white background */
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: background 0.2s;
       margin-bottom: 10px;
+      border-radius: 5px; /* small rounding, optional */
     }
 
-    .search-box:hover { background: #333; }
+    .search-box:hover { background: #f0f0f0; }
 
     .search-box svg {
       width: 20px;
       height: 20px;
-      fill: #fff; /* white inside magnifying glass */
+      fill: none;
+      stroke: #000;
+      stroke-width: 2;
     }
 
     /* Date / status text */
@@ -102,12 +104,12 @@
   <div class="info-title-container">
 
     <div class="left-container">
-      <!-- Magnifying glass above text -->
+      <!-- Search box above text -->
       <div class="search-box" id="searchBox">
-        <!-- Simple SVG magnifying glass -->
+        <!-- Simple magnifying glass SVG -->
         <svg viewBox="0 0 24 24">
-          <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none"/>
-          <line x1="15" y1="15" x2="21" y2="21" stroke="white" stroke-width="2"/>
+          <circle cx="10" cy="10" r="7"/>
+          <line x1="15" y1="15" x2="21" y2="21"/>
         </svg>
       </div>
 
@@ -130,11 +132,12 @@
     const today = new Date();
     dateElem.textContent = "Date: " + today.toLocaleDateString();
 
-    // Optional: Add click interaction if you want it expandable
+    // Keep click functionality intact
     const searchBox = document.getElementById("searchBox");
     searchBox.addEventListener("click", () => {
-      alert("Search clicked!"); // Placeholder for search functionality
+      alert("Search clicked!"); // Placeholder for actual search
     });
   </script>
 </body>
 </html>
+]]]]]]]]]]]]]]]]
