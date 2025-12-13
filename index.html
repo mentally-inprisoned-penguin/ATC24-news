@@ -17,40 +17,6 @@
       min-height: 500vh;
     }
 
-    /* Fixed top language bar */
-    .language-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #f8f8f8;
-      border-bottom: 1px solid #d0d0d0;
-      height: 30px; /* similar to NYT small text bar */
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 20px;
-      font-family: Arial, sans-serif;
-      font-size: 12px; /* matches NYT top bar */
-      z-index: 9999;
-    }
-
-    .language-bar span {
-      cursor: pointer;
-      margin-left: 15px;
-      transition: color 0.2s;
-    }
-
-    .language-bar span:hover {
-      color: #000;
-      text-decoration: underline;
-    }
-
-    /* Push main content down to avoid overlap */
-    .content-wrapper {
-      padding-top: 30px; /* same as language bar height */
-    }
-
     /* Advertisement */
     .ad-box {
       width: 100%;
@@ -66,13 +32,40 @@
       margin-top: 0;
     }
 
-    /* Center title and left search remains unchanged */
+    /* Info + Title + Search wrapper */
     .info-title-container {
       position: relative;
-      padding: 20px;
-      height: 120px;
+      padding: 20px 0;
+      height: 150px; /* allow space for language bar + title */
     }
 
+    /* Language bar above the title, centered text */
+    .language-bar {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      gap: 15px;
+      z-index: 10;
+      background: transparent; /* remove thin line/border */
+    }
+
+    .language-bar span {
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .language-bar span:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Center title */
     .news-title {
       font-family: "Zilla Slab", serif;
       font-size: 60px;
@@ -83,8 +76,10 @@
       transform: translate(-50%, -50%);
       text-align: center;
       white-space: nowrap;
+      z-index: 1;
     }
 
+    /* Left search box + info */
     .left-container {
       position: absolute;
       left: 20px;
@@ -160,44 +155,41 @@
 </head>
 <body>
 
-  <!-- Fixed top language bar -->
-  <div class="language-bar">
-    <span>English</span>
-    <span>Dutch</span>
-    <span>German</span>
+  <!-- Advertisement -->
+  <div class="ad-box">
+    [Contact domtom3401 to have your advertisement displayed here]
   </div>
 
-  <!-- Main content wrapper to avoid overlap -->
-  <div class="content-wrapper">
+  <!-- Info + Title + Search -->
+  <div class="info-title-container">
 
-    <!-- Advertisement -->
-    <div class="ad-box">
-      [Contact domtom3401 to have your advertisement displayed here]
+    <!-- Language bar above the title -->
+    <div class="language-bar">
+      <span>English</span>
+      <span>Dutch</span>
+      <span>German</span>
     </div>
 
-    <!-- Info + Title + Search -->
-    <div class="info-title-container">
-
-      <div class="left-container">
-        <!-- Search box above text -->
-        <div class="search-box" id="searchBox">
-          <svg viewBox="0 0 24 24">
-            <circle cx="10" cy="10" r="7"/>
-            <line x1="15" y1="15" x2="21" y2="21"/>
-          </svg>
-          <input type="text" placeholder="Search...">
-        </div>
-        <div class="top-left-info">
-          <div id="date">Date: --/--/----</div>
-          <div>Status: none published</div>
-        </div>
+    <!-- Left items (search + date/status) -->
+    <div class="left-container">
+      <div class="search-box" id="searchBox">
+        <svg viewBox="0 0 24 24">
+          <circle cx="10" cy="10" r="7"/>
+          <line x1="15" y1="15" x2="21" y2="21"/>
+        </svg>
+        <input type="text" placeholder="Search...">
       </div>
-
-      <h1 class="news-title">The ATC24 News</h1>
+      <div class="top-left-info">
+        <div id="date">Date: --/--/----</div>
+        <div>Status: none published</div>
+      </div>
     </div>
 
-    <div class="content"></div>
+    <!-- Centered title -->
+    <h1 class="news-title">The ATC24 News</h1>
   </div>
+
+  <div class="content"></div>
 
   <script>
     const dateElem = document.getElementById("date");
