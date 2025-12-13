@@ -70,19 +70,32 @@
       cursor: pointer;
       transition: background 0.2s, width 0.3s;
       overflow: hidden;
+      position: relative;
     }
 
     .search-box:hover { background: #f0f0f0; }
 
-    .search-box.active { width: 200px; }
+    .search-box.active {
+      width: 200px;
+      justify-content: flex-start;
+    }
+
+    .search-box .search-icon {
+      margin-left: 8px;
+    }
 
     .search-box input {
-      width: 100%;
+      display: none;
       border: none;
       outline: none;
-      background: transparent;
       padding: 0 8px;
       font-size: 16px;
+      flex: 1;
+      background: transparent;
+    }
+
+    .search-box.active input {
+      display: block;
     }
 
     /* Google-style Log In button */
@@ -131,7 +144,10 @@
     <h1 class="news-title">The ATC24 News</h1>
 
     <div class="header-actions">
-      <div class="search-box" id="searchBox">🔍</div>
+      <div class="search-box" id="searchBox">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search..." />
+      </div>
       <button class="login-btn">LOG IN</button>
     </div>
   </div>
@@ -146,18 +162,17 @@
 
     // Search box toggle
     const searchBox = document.getElementById("searchBox");
+    const searchInput = searchBox.querySelector("input");
 
     searchBox.addEventListener("click", () => {
       if (!searchBox.classList.contains("active")) {
         searchBox.classList.add("active");
-        searchBox.innerHTML = '<input type="text" placeholder="Search...">';
-        searchBox.querySelector("input").focus();
+        searchInput.focus();
       }
     });
 
-    searchBox.addEventListener("focusout", () => {
+    searchInput.addEventListener("focusout", () => {
       searchBox.classList.remove("active");
-      searchBox.innerHTML = "🔍";
     });
   </script>
 </body>
