@@ -42,22 +42,26 @@
     /* Language bar above the title, centered text */
     .language-bar {
       position: absolute;
-      top: 0;
+      top: 100%; /* relative to container, below the ad-box */
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(5px); /* 2-5px spacing from bottom of ad-box */
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      font-size: 12px;
+      font-size: 14px; /* increased by ~2px */
       gap: 15px;
       z-index: 10;
-      background: transparent; /* remove thin line/border */
+      background: transparent;
     }
 
     .language-bar span {
       cursor: pointer;
-      transition: color 0.2s;
+      transition: color 0.2s, font-weight 0.2s;
+    }
+
+    .language-bar span.selected {
+      font-weight: 700; /* bold for selected */
     }
 
     .language-bar span:hover {
@@ -163,9 +167,9 @@
   <!-- Info + Title + Search -->
   <div class="info-title-container">
 
-    <!-- Language bar above the title -->
-    <div class="language-bar">
-      <span>English</span>
+    <!-- Language bar -->
+    <div class="language-bar" id="languageBar">
+      <span class="selected">English</span>
       <span>Dutch</span>
       <span>German</span>
     </div>
@@ -192,10 +196,12 @@
   <div class="content"></div>
 
   <script>
+    // Display today's date
     const dateElem = document.getElementById("date");
     const today = new Date();
     dateElem.textContent = "Date: " + today.toLocaleDateString();
 
+    // Search box expand
     const searchBox = document.getElementById("searchBox");
     const input = searchBox.querySelector("input");
 
@@ -206,6 +212,17 @@
 
     input.addEventListener("focusout", () => {
       searchBox.classList.remove("active");
+    });
+
+    // Language selection
+    const languageBar = document.getElementById("languageBar");
+    const languages = languageBar.querySelectorAll('span');
+
+    languages.forEach(lang => {
+      lang.addEventListener('click', () => {
+        languages.forEach(l => l.classList.remove('selected'));
+        lang.classList.add('selected'); // bold the selected
+      });
     });
   </script>
 </body>
