@@ -1,0 +1,96 @@
+ res.end(`
+    <html>
+      <head>
+        <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+
+        <!-- Load Google Font: Zilla Slab -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+        <style>
+          body {
+            margin: 0;
+            overflow-y: scroll;
+            color: white;
+            background-color: #FFFFFF;
+            font-family: 'Georgia', "Times New Roman", Times, serif;
+            height: 500vh; /* long page */
+          }
+
+          /* Advertisement Block */
+          .ad-box {
+            width: 100%;
+            height: 150px;
+            background-color: #F8F8F8;
+            border: 2px solid #d0d0d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            margin: 0 auto; /* top position */
+          }
+
+          .ad-box span {
+            color: #000000;
+            font-size: 20px;
+          }
+
+          /* Container for info + title */
+          .info-title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* vertically center them */
+            padding: 0 20px; /* horizontal padding */
+            margin-top: 10px;
+          }
+
+          .top-left-info {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 300; /* thin */
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.4;
+            text-align: left;
+          }
+
+          .news-title {
+            font-size: 60px;
+            color: #000000;
+            font-weight: 700;
+            font-family: 'Zilla Slab', serif;
+            text-align: right; /* align right in flex container */
+            margin: 0;
+          }
+        </style>
+      </head>
+
+      <body>
+
+        <!-- Advertisement Block -->
+        <div class="ad-box" id="adBox">
+          <span>Contact domtom3401 to have your advertisement displayed here</span>
+        </div>
+
+        <!-- Info and title on the same Y level -->
+        <div class="info-title-container">
+          <div class="top-left-info">
+            <div id="date">Date: --/--/----</div>
+            <div id="status">Status: none published</div>
+          </div>
+          <div class="news-title">The ATC24 News</div>
+        </div>
+
+        <script>
+          // Set current date
+          const dateElem = document.getElementById('date');
+          const today = new Date();
+          dateElem.textContent = "Date: " + today.toLocaleDateString();
+        </script>
+
+      </body>
+    </html>
+  `);
+});
