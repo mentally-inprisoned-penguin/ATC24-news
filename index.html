@@ -36,7 +36,7 @@
     .info-title-container {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; /* allow vertical stacking */
+      align-items: flex-start;
       padding: 20px;
     }
 
@@ -46,21 +46,25 @@
       align-items: flex-start;
     }
 
-    /* Search Box (now square) */
+    /* Search Box */
     .search-box {
       width: 40px;
       height: 40px;
-      background: #fff; /* white background */
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, width 0.3s;
       margin-bottom: 10px;
-      border-radius: 5px; /* small rounding, optional */
+      border-radius: 5px;
+      overflow: hidden;
     }
 
     .search-box:hover { background: #f0f0f0; }
+
+    /* Expanded state */
+    .search-box.active { width: 200px; }
 
     .search-box svg {
       width: 20px;
@@ -68,6 +72,23 @@
       fill: none;
       stroke: #000;
       stroke-width: 2;
+      transition: opacity 0.2s;
+    }
+
+    .search-box.active svg { opacity: 0; }
+
+    .search-box input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0 8px;
+      font-size: 16px;
+      display: none;
+    }
+
+    .search-box.active input {
+      display: block;
     }
 
     /* Date / status text */
@@ -85,7 +106,7 @@
       font-weight: 700;
       text-align: center;
       flex: 1;
-      margin: 0 20px;
+      margin: 0px;
     }
 
     /* Spacer content */
@@ -97,7 +118,7 @@
 
   <!-- Advertisement -->
   <div class="ad-box">
-    Contact domtom3401 to have your advertisement displayed here
+    [Contact domtom3401 to have your advertisement displayed here]
   </div>
 
   <!-- Info + Title + Search -->
@@ -106,11 +127,12 @@
     <div class="left-container">
       <!-- Search box above text -->
       <div class="search-box" id="searchBox">
-        <!-- Simple magnifying glass SVG -->
+        <!-- Magnifying glass SVG -->
         <svg viewBox="0 0 24 24">
           <circle cx="10" cy="10" r="7"/>
           <line x1="15" y1="15" x2="21" y2="21"/>
         </svg>
+        <input type="text" placeholder="Search...">
       </div>
 
       <div class="top-left-info">
@@ -132,12 +154,21 @@
     const today = new Date();
     dateElem.textContent = "Date: " + today.toLocaleDateString();
 
-    // Keep click functionality intact
+    // Toggle search input
     const searchBox = document.getElementById("searchBox");
+    const input = searchBox.querySelector("input");
+    const svg = searchBox.querySelector("svg");
+
     searchBox.addEventListener("click", () => {
-      alert("Search clicked!"); // Placeholder for actual search
+      if (!searchBox.classList.contains("active")) {
+        searchBox.classList.add("active");
+        input.focus();
+      }
+    });
+
+    input.addEventListener("focusout", () => {
+      searchBox.classList.remove("active");
     });
   </script>
 </body>
 </html>
-]]]]]]]]]]]]]]]]
