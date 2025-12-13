@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -18,7 +17,6 @@
       min-height: 500vh;
     }
 
-    /* Advertisement */
     .ad-box {
       width: 100%;
       height: 250px;
@@ -32,23 +30,36 @@
       font-size: 24px;
     }
 
-    /* Info + Title + Search */
     .info-title-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 20px;
       position: relative;
+      padding: 20px;
+      height: 120px; /* reserve space for left items */
     }
 
+    /* Center title fixed */
+    .news-title {
+      font-family: "Zilla Slab", serif;
+      font-size: 60px;
+      font-weight: 700;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Left container */
     .left-container {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      position: relative;
     }
 
-    /* Search Box */
     .search-box {
       width: 40px;
       height: 40px;
@@ -60,13 +71,12 @@
       transition: background 0.2s;
       margin-bottom: 10px;
       border-radius: 5px;
+      overflow: visible;
       position: relative;
-      overflow: visible; /* allow input to extend outside */
     }
 
     .search-box:hover { background: #f0f0f0; }
 
-    /* Magnifying glass */
     .search-box svg {
       width: 20px;
       height: 20px;
@@ -78,7 +88,6 @@
       z-index: 2;
     }
 
-    /* Input field */
     .search-box input {
       position: absolute;
       left: 0;
@@ -101,11 +110,8 @@
       opacity: 1;
     }
 
-    .search-box.active svg {
-      opacity: 0; /* hide magnifying glass when expanded */
-    }
+    .search-box.active svg { opacity: 0; }
 
-    /* Date / status text */
     .top-left-info {
       font-family: Arial, sans-serif;
       font-weight: 300;
@@ -113,65 +119,45 @@
       color: #333;
     }
 
-    /* Center title */
-    .news-title {
-      font-family: "Zilla Slab", serif;
-      font-size: 60px;
-      font-weight: 700;
-      text-align: center;
-      flex: 1;
-      margin: 0px;
-    }
-
-    /* Spacer content */
     .content { height: 300vh; }
 
   </style>
 </head>
 <body>
 
-  <!-- Advertisement -->
   <div class="ad-box">
     [Contact domtom3401 to have your advertisement displayed here]
   </div>
 
-  <!-- Info + Title + Search -->
   <div class="info-title-container">
-
+    <!-- Left items (search + date/status) -->
     <div class="left-container">
-      <!-- Search box above text -->
       <div class="search-box" id="searchBox">
-        <!-- Magnifying glass SVG -->
         <svg viewBox="0 0 24 24">
           <circle cx="10" cy="10" r="7"/>
           <line x1="15" y1="15" x2="21" y2="21"/>
         </svg>
         <input type="text" placeholder="Search...">
       </div>
-
       <div class="top-left-info">
         <div id="date">Date: --/--/----</div>
-        <div>Status: Website unreleased</div>
+        <div>Status: none published</div>
       </div>
     </div>
 
+    <!-- Centered title -->
     <h1 class="news-title">The ATC24 News</h1>
-
-    <div style="width:40px;"></div> <!-- spacer -->
   </div>
 
   <div class="content"></div>
 
   <script>
-    // Display today's date
     const dateElem = document.getElementById("date");
     const today = new Date();
     dateElem.textContent = "Date: " + today.toLocaleDateString();
 
-    // Toggle search input
     const searchBox = document.getElementById("searchBox");
     const input = searchBox.querySelector("input");
-    const svg = searchBox.querySelector("svg");
 
     searchBox.addEventListener("click", () => {
       searchBox.classList.add("active");
