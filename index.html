@@ -38,12 +38,14 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 20px;
+      position: relative;
     }
 
     .left-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      position: relative;
     }
 
     /* Search Box */
@@ -55,17 +57,16 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.2s, width 0.3s;
+      transition: background 0.2s;
       margin-bottom: 10px;
       border-radius: 5px;
-      overflow: hidden;
+      position: relative;
+      overflow: visible; /* allow input to extend outside */
     }
 
     .search-box:hover { background: #f0f0f0; }
 
-    /* Expanded state */
-    .search-box.active { width: 200px; }
-
+    /* Magnifying glass */
     .search-box svg {
       width: 20px;
       height: 20px;
@@ -73,22 +74,35 @@
       stroke: #000;
       stroke-width: 2;
       transition: opacity 0.2s;
+      position: relative;
+      z-index: 2;
     }
 
-    .search-box.active svg { opacity: 0; }
-
+    /* Input field */
     .search-box input {
-      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
       border: none;
       outline: none;
-      background: transparent;
-      padding: 0 8px;
+      padding: 0 10px;
       font-size: 16px;
-      display: none;
+      background: #fff;
+      opacity: 0;
+      transition: width 0.3s ease, opacity 0.3s ease;
+      border-radius: 5px;
+      z-index: 1;
     }
 
     .search-box.active input {
-      display: block;
+      width: 200px;
+      opacity: 1;
+    }
+
+    .search-box.active svg {
+      opacity: 0; /* hide magnifying glass when expanded */
     }
 
     /* Date / status text */
@@ -160,10 +174,8 @@
     const svg = searchBox.querySelector("svg");
 
     searchBox.addEventListener("click", () => {
-      if (!searchBox.classList.contains("active")) {
-        searchBox.classList.add("active");
-        input.focus();
-      }
+      searchBox.classList.add("active");
+      input.focus();
     });
 
     input.addEventListener("focusout", () => {
