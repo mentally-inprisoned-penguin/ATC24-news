@@ -1,170 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ATC24 News</title>
 
-    <!-- Google Font: Zilla Slab -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet" />
 
-    <title>The ATC24 News</title>
+  <style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-      /* Reset */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+    body {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background-color: #fff;
+      min-height: 500vh;
+    }
 
-      body {
-        background-color: #ffffff;
-        font-family: Georgia, "Times New Roman", Times, serif;
-        min-height: 500vh;
-        overflow-y: scroll;
-      }
+    /* Advertisement */
+    .ad-box {
+      width: 100%;
+      height: 250px;
+      background-color: #f8f8f8;
+      border-bottom: 2px solid #d0d0d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+    }
 
-      /* Advertisement Block */
-      .ad-box {
-        width: 100%;
-        height: 250px;
-        background-color: #f8f8f8;
-        border-bottom: 2px solid #d0d0d0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: bold;
-      }
+    /* Info + Title + Search */
+    .info-title-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start; /* allow vertical stacking */
+      padding: 20px;
+    }
 
-      .ad-box span {
-        color: #000000;
-        font-size: 24px;
-        text-align: center;
-        max-width: 90%;
-      }
+    .left-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-      /* Info + Title Row */
-      .info-title-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        margin-top: 10px;
-      }
+    /* Search Box */
+    .search-box {
+      width: 40px;
+      height: 40px;
+      background: #000; /* black background for the circle */
+      border-radius: 50%; /* make it circular */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 10px;
+    }
 
-      .top-left-info {
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 300;
-        font-size: 14px;
-        color: #333333;
-        line-height: 1.4;
-        text-align: left;
-      }
+    .search-box:hover { background: #333; }
 
-      .news-title {
-        font-family: "Zilla Slab", serif;
-        font-size: 60px;
-        font-weight: 700;
-        color: #000000;
-        margin: 0;
-        text-align: center;
-        flex: 1;
-      }
+    .search-box svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff; /* white inside magnifying glass */
+    }
 
-      /* Spacer for alignment */
-      .spacer {
-        width: 40px; /* same as initial search box width */
-      }
+    /* Date / status text */
+    .top-left-info {
+      font-family: Arial, sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: #333;
+    }
 
-      /* Search Box */
-      .search-box {
-        width: 40px;
-        height: 40px;
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #d0d0d0;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s ease, width 0.3s ease;
-        font-size: 20px;
-        overflow: hidden;
-      }
+    /* Center title */
+    .news-title {
+      font-family: "Zilla Slab", serif;
+      font-size: 60px;
+      font-weight: 700;
+      text-align: center;
+      flex: 1;
+      margin: 0 20px;
+    }
 
-      .search-box:hover {
-        background-color: #f0f0f0;
-      }
+    /* Spacer content */
+    .content { height: 300vh; }
 
-      .search-box.active {
-        width: 200px;
-      }
+  </style>
+</head>
+<body>
 
-      .search-box input {
-        border: none;
-        outline: none;
-        width: 100%;
-        font-size: 16px;
-        padding: 0 8px;
-        background: transparent;
-      }
+  <!-- Advertisement -->
+  <div class="ad-box">
+    Contact domtom3401 to have your advertisement displayed here
+  </div>
 
-      /* Spacer content */
-      .content {
-        height: 300vh;
-      }
-    </style>
-  </head>
+  <!-- Info + Title + Search -->
+  <div class="info-title-container">
 
-  <body>
-    <!-- Advertisement -->
-    <div class="ad-box">
-      <span>Contact domtom3401 to have your advertisement displayed here</span>
-    </div>
+    <div class="left-container">
+      <!-- Magnifying glass above text -->
+      <div class="search-box" id="searchBox">
+        <!-- Simple SVG magnifying glass -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none"/>
+          <line x1="15" y1="15" x2="21" y2="21" stroke="white" stroke-width="2"/>
+        </svg>
+      </div>
 
-    <!-- Info + Title + Search -->
-    <div class="info-title-container">
       <div class="top-left-info">
         <div id="date">Date: --/--/----</div>
         <div>Status: none published</div>
       </div>
-
-      <h1 class="news-title">The ATC24 News</h1>
-
-      <!-- Search Box -->
-      <div class="search-box" id="searchBox">🔍</div>
     </div>
 
-    <div class="content"></div>
+    <h1 class="news-title">The ATC24 News</h1>
 
-    <script>
-      // Display today's date
-      const dateElem = document.getElementById("date");
-      const today = new Date();
-      dateElem.textContent = "Date: " + today.toLocaleDateString();
+    <div style="width:40px;"></div> <!-- spacer -->
+  </div>
 
-      // Search box toggle
-      const searchBox = document.getElementById("searchBox");
+  <div class="content"></div>
 
-      searchBox.addEventListener("click", () => {
-        if (!searchBox.classList.contains("active")) {
-          searchBox.classList.add("active");
-          searchBox.innerHTML = '<input type="text" placeholder="Search...">';
-          searchBox.querySelector("input").focus();
-        }
-      });
+  <script>
+    // Display today's date
+    const dateElem = document.getElementById("date");
+    const today = new Date();
+    dateElem.textContent = "Date: " + today.toLocaleDateString();
 
-      searchBox.addEventListener("focusout", () => {
-        searchBox.classList.remove("active");
-        searchBox.innerHTML = "🔍";
-      });
-    </script>
-  </body>
+    // Optional: Add click interaction if you want it expandable
+    const searchBox = document.getElementById("searchBox");
+    searchBox.addEventListener("click", () => {
+      alert("Search clicked!"); // Placeholder for search functionality
+    });
+  </script>
+</body>
 </html>
-
