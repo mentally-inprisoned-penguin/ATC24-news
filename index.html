@@ -37,6 +37,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   border: 1px solid #d0d0d0; border-radius: 5px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; background: #fff; margin-bottom: 6px;
+  position: relative;
 }
 .search-btn:hover { background: #f0f0f0; }
 
@@ -61,7 +62,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .search-popup {
   position: absolute;
   display: none;
-  top: 0;
 }
 .search-popup input {
   border: 1px solid #000;
@@ -164,9 +164,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  const rect = btn.getBoundingClientRect();
-  popup.style.top = rect.top + "px"; // same Y as button
-  popup.style.left = rect.right + 5 + "px"; // next to button
+  popup.style.top = btn.offsetTop + "px";          // Align top of popup with button
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // Right next to button
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
