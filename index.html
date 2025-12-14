@@ -18,13 +18,22 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .ad-box {
   height: 250px;
   background: #f8f8f8;
-  border-bottom: 2px solid #d0d0d0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 24px;
+  overflow: hidden;
+  position: relative;
+}
+.ad-text {
+  display: inline-block;
+  transform: translateY(-100%);
+  animation: slideDown 1.5s forwards;
+}
+@keyframes slideDown {
+  to { transform: translateY(0); }
 }
 
 /* Vertical divider (right-most quarter) */
@@ -32,7 +41,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: fixed;
   right: 25%;
   top: 0;
-  height: calc(100% - 1px); /* Ends at horizontal line */
+  bottom: 0; /* extend down infinitely */
   width: 1px;
   background: #d0d0d0;
   pointer-events: none;
@@ -70,7 +79,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; }
 
 /* Horizontal divider */
-.horizontal-divider { width: 100%; height: 1px; background: #d0d0d0; margin-top: 6px; }
+.horizontal-divider { width: 100%; height: 2px; background: black; margin-top: 6px; }
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -88,19 +97,20 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .stock-name { color: black; }
 .stock-up { color: green; }
 .stock-down { color: #BE595B; }
-.arrow { font-size: 13.5px; margin-left: 2px; }
+.arrow { font-size: 14px; margin-left: 2px; }
 
 /* Language Selector */
 .language-selector { display:flex; justify-content:center; gap:30px; margin-top:2.5px; font-family:Arial,sans-serif; font-size:16px; }
 .language-selector span { cursor:pointer; }
 .language-selector span.active { font-weight:bold; }
+
 </style>
 </head>
 
 <body>
 
 <div class="ad-box">
-  [Contact domtom3401 to have your advertisement displayed here]
+  <div class="ad-text">[Contact domtom3401 to have your advertisement displayed here]</div>
 </div>
 
 <div class="vertical-divider"></div>
@@ -145,6 +155,16 @@ window.addEventListener("load", () => {
   setTimeout(()=> { content.style.opacity=1; }, 300);
 });
 
+/* Advert animation */
+const adText = document.querySelector('.ad-text');
+adText.style.transform = 'translateY(-100%)';
+adText.style.opacity = 0;
+setTimeout(()=>{ 
+  adText.style.transition = 'transform 1.5s ease, opacity 1.5s ease';
+  adText.style.transform = 'translateY(0)';
+  adText.style.opacity = 1;
+}, 100);
+
 /* Date */
 document.getElementById("date").textContent = "Date: " + new Date().toLocaleDateString();
 
@@ -171,10 +191,8 @@ document.querySelectorAll(".language-selector span").forEach(lang=>{
 
 /* Stocks */
 const companies = [
-  // Old PTFS-style
   "PTFS Alpha","PTFS Beta","PTFS Gamma","PTFS Delta","PTFS Epsilon",
   "PTFS Zeta","PTFS Eta","PTFS Theta","PTFS Iota","PTFS Kappa",
-  // New business-inspired names, max 2 words, suffix only if single word
   "Perth LLC","Lukla INC","Dockers Solutions","Mellor Enterprises",
   "Garry Tech","Boltic Systems","Carrigknock","Haneda Industries","Barra Holdings"
 ];
@@ -185,7 +203,6 @@ function updateStock() {
   let c;
   do { c = companies[Math.floor(Math.random()*companies.length)]; } while(c===lastStock.name);
 
-  // Mild percentage change based on last value
   let change = (lastStock.value + (Math.random()*2-1.5)).toFixed(2);
   if(change>10) change=10;
   if(change<-10) change=-10;
@@ -193,17 +210,23 @@ function updateStock() {
   const up = change>=0;
   const arrow = up ? "↑" : "↓";
 
-  document.getElementById("stock").innerHTML = `
-    <span class="stock-name">${c}</span>
-    <span class="${up?"stock-up":"stock-down"}">${change}%<span class="arrow">${arrow}</span></span>
-  `;
+  let nameToShow = c;
+  const stockDiv = document.getElementById("stock");
+  // Shorten name if too long for login button
+  while(true){
+    stockDiv.innerHTML = `<span class="stock-name">${nameToShow}</span> <span class="${up?"stock-up":"stock-down"}">${change}%<span class="arrow">${arrow}</span></span>`;
+    if(stockDiv.scrollWidth <= stockDiv.clientWidth || nameToShow.length <= 4) break;
+    nameToShow = nameToShow.slice(0,-1); // remove last char
+  }
 
   lastStock = {name:c,value:parseFloat(change)};
 }
 
 updateStock();
 setInterval(updateStock,5000);
+
 </script>
 
 </body>
 </html>
+
