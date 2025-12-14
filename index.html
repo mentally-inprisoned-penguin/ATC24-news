@@ -11,6 +11,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; min-height: 300vh; overflow-x: hidden; }
 
+/* Page content fade-in */
+#pageContent { opacity: 0; transition: opacity 1.2s ease-in-out; }
+
 /* Advert */
 .ad-box {
   height: 250px;
@@ -79,20 +82,26 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   height: 30px;
 }
 
-/* Horizontal lines */
-.header-line, .header-line-duplicate {
+/* Horizontal line under date/status */
+.header-line {
   position: absolute;
+  left: 0;
+  right: 0;
   height: 2px;
   background: #000;
-  left: 20px; /* left margin from screen edge */
-  right: 20px; /* mirror same margin on right */
+  top: calc(100% + 4px);
 }
-.header-line { top: calc(100% + 4px); }
-.header-line-duplicate { top: calc(100% + 6.5px); } /* 2.5px below the first */
 
 /* Title */
 .title-container { flex: 1; text-align: left; position: relative; }
-.news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; position: relative; left: 172px; }
+.news-title { 
+  font-family: "Zilla Slab", serif; 
+  font-size: 60px; 
+  font-weight: 700; 
+  margin: 0; 
+  position: relative; 
+  left: 172px; /* C aligned under Dutch */
+}
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -137,12 +146,14 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 <div class="header">
   <div class="left-info">
     <div style="position: relative; display: flex; align-items: center;">
+      <!-- Search button -->
       <div class="search-btn" id="searchBtn">
         <div class="search-icon">
           <div class="circle"></div>
           <div class="handle"></div>
         </div>
       </div>
+      <!-- Popup search -->
       <div class="search-popup" id="searchPopup">
         <input type="text" placeholder="Search…" id="searchInput">
       </div>
@@ -150,7 +161,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     <div id="date"></div>
     <div>Status: none published</div>
     <div class="header-line"></div>
-    <div class="header-line-duplicate"></div>
   </div>
 
   <div class="title-container">
@@ -181,8 +191,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = btn.offsetTop + "px";
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px";
+  popup.style.top = btn.offsetTop + "px";          
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; 
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
