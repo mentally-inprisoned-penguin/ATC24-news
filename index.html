@@ -27,7 +27,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 }
 
 /* Header */
-.header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 20px; position: relative; }
 
 .left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; }
 
@@ -38,32 +38,36 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   border: 1px solid #d0d0d0; 
   border-radius: 5px;
   display: flex; 
-  align-items: center;      /* vertically center */
-  justify-content: center;  /* horizontally center */
+  align-items: center; 
+  justify-content: center;
   cursor: pointer; 
   background: #fff; 
   position: relative;
 }
 
-/* Magnifying glass */
+/* Magnifying glass with handle */
 .search-icon {
-  width: 16px; 
+  position: relative;
+  width: 16px;
   height: 16px;
+}
+.search-icon .circle {
+  width: 14px;
+  height: 14px;
   border: 2px solid #000;
   border-radius: 50%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.search-icon::after {
-  content: '';
   position: absolute;
-  width: 8px; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.search-icon .handle {
+  width: 8px;
   height: 2px;
   background: #000;
-  top: 12px; 
-  left: 12px;
+  position: absolute;
+  top: 70%;
+  left: 70%;
   transform: rotate(45deg);
   transform-origin: left top;
 }
@@ -81,6 +85,16 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   height: 30px;
 }
 
+/* Horizontal line under date/status */
+.header-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #000;
+  top: calc(100% + 1px); /* just under the last line of date/status */
+}
+
 /* Title */
 .title-container { flex: 1; text-align: left; position: relative; }
 .news-title { 
@@ -89,7 +103,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   font-weight: 700; 
   margin: 0; 
   position: relative; 
-  left: 172px; /* Adjusted so C aligns under T in Dutch */
+  left: 172px; /* C aligned under Dutch */
 }
 
 /* Login */
@@ -137,7 +151,10 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     <div style="position: relative; display: flex; align-items: center;">
       <!-- Search button -->
       <div class="search-btn" id="searchBtn">
-        <div class="search-icon"></div>
+        <div class="search-icon">
+          <div class="circle"></div>
+          <div class="handle"></div>
+        </div>
       </div>
       <!-- Popup search -->
       <div class="search-popup" id="searchPopup">
@@ -146,6 +163,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     </div>
     <div id="date"></div>
     <div>Status: none published</div>
+    <div class="header-line"></div>
   </div>
 
   <div class="title-container">
