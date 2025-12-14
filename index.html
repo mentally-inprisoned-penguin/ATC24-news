@@ -33,17 +33,22 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 
 /* Search button */
 .search-btn {
-  width: 40px; height: 40px;
-  border: 1px solid #d0d0d0; border-radius: 5px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; background: #fff; margin-bottom: 6px;
+  width: 40px; 
+  height: 40px;
+  border: 1px solid #d0d0d0; 
+  border-radius: 5px;
+  display: flex; 
+  align-items: center;      /* vertically center */
+  justify-content: center;  /* horizontally center */
+  cursor: pointer; 
+  background: #fff; 
   position: relative;
 }
-.search-btn:hover { background: #f0f0f0; }
 
-/* Simplified magnifying glass */
+/* Magnifying glass */
 .search-icon {
-  width: 16px; height: 16px;
+  width: 16px; 
+  height: 16px;
   border: 2px solid #000;
   border-radius: 50%;
   position: relative;
@@ -51,9 +56,11 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .search-icon::after {
   content: '';
   position: absolute;
-  width: 8px; height: 2px;
+  width: 8px; 
+  height: 2px;
   background: #000;
-  top: 12px; left: 12px;
+  top: 12px; 
+  left: 12px;
   transform: rotate(45deg);
   transform-origin: left top;
 }
@@ -164,8 +171,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = (btn.offsetTop + 0.2) + "px";          // Lower by 0.2px
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // Right next to button
+  popup.style.top = btn.offsetTop + "px";          // same Y as button
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // next to button
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
