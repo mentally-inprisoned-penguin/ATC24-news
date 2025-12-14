@@ -8,17 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; min-height: 300vh; overflow-x: hidden; }
 
-body {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  background: #fff;
-  min-height: 300vh;
-}
+/* Page Load Animation */
+#pageContent { opacity: 0; transition: opacity 1.2s ease-in-out; }
 
 /* Advert */
 .ad-box {
@@ -33,134 +27,73 @@ body {
   font-size: 24px;
 }
 
-/* Vertical divider (rightmost quarter) */
+/* Vertical divider (right-most quarter) */
 .vertical-divider {
   position: fixed;
   right: 25%;
   top: 0;
-  height: 100vh;
+  height: calc(100% - 1px); /* Ends at horizontal line */
   width: 1px;
   background: #d0d0d0;
   pointer-events: none;
 }
 
 /* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
+.header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
 
-.left-info {
-  width: 220px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
+.left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; }
 
 /* Search */
 .search-btn {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #d0d0d0;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-bottom: 6px;
+  width: 40px; height: 40px;
+  border: 1px solid #d0d0d0; border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.2s;
+  background: #fff; margin-bottom: 6px;
 }
+.search-btn:hover { background: #f0f0f0; }
+.search-icon { font-size: 18px; color: #000; }
 
-.search-btn:hover {
-  background: #f0f0f0;
-}
-
+/* Popup search */
 .search-popup {
   position: absolute;
-  top: 60px;
-  left: 20px;
-  padding: 6px;
-  border: 2px solid black;
+  left: 45px; top: 0;
+  padding: 6px; border: 2px solid black;
   display: none;
   animation: blink 2s infinite;
 }
-
-.search-popup input {
-  border: none;
-  outline: none;
-  font-size: 15px;
-}
-
-@keyframes blink {
-  0%, 50% { border-color: black; }
-  51%, 100% { border-color: transparent; }
-}
+@keyframes blink { 0%,50%{border-color:black} 51%,100%{border-color:transparent} }
+.search-popup input { border: none; outline: none; font-size: 15px; }
 
 /* Title */
-.title-container {
-  flex: 1;
-  text-align: center;
-  transform: translateX(-6px);
-}
-
-.news-title {
-  font-family: "Zilla Slab", serif;
-  font-size: 60px;
-  font-weight: 700;
-}
+.title-container { flex: 1; text-align: center; }
+.news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; }
 
 /* Horizontal divider */
-.horizontal-divider {
-  width: 100%;
-  height: 1px;
-  background: #d0d0d0;
-  margin-top: 6px;
-}
+.horizontal-divider { width: 100%; height: 1px; background: #d0d0d0; margin-top: 6px; }
 
 /* Login */
-.login-container {
-  width: 120px;
-  text-align: center;
-}
-
+.login-container { width: 120px; text-align: center; position: relative; }
 .login-btn {
-  width: 100%;
-  background: #417093;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 0;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: clamp(12px, 2vw, 16px);
-  cursor: pointer;
+  width: 100%; background: #417093; color: #fff; border: none; border-radius: 4px;
+  padding: 8px 0; font-family: Arial, sans-serif; font-weight: bold;
+  font-size: clamp(12px, 2vw, 16px); cursor: pointer;
 }
 
-/* Stock */
+/* Stocks */
 .stock {
-  margin-top: 1.5px;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  white-space: nowrap;
+  margin-top: 1.5px; font-family: Arial, sans-serif; font-size: 13px;
+  white-space: nowrap; overflow: hidden; text-align: center;
 }
+.stock-name { color: black; }
+.stock-up { color: green; }
+.stock-down { color: #BE595B; }
+.arrow { font-size: 13.5px; margin-left: 2px; }
 
-.stock-name {
-  color: black;
-}
-
-.stock-up {
-  color: green;
-}
-
-.stock-down {
-  color: #BE595B;
-}
-
-.arrow {
-  font-size: 13.5px;
-  margin-left: 2px;
-}
+/* Language Selector */
+.language-selector { display:flex; justify-content:center; gap:30px; margin-top:2.5px; font-family:Arial,sans-serif; font-size:16px; }
+.language-selector span { cursor:pointer; }
+.language-selector span.active { font-weight:bold; }
 </style>
 </head>
 
@@ -172,9 +105,19 @@ body {
 
 <div class="vertical-divider"></div>
 
+<div id="pageContent">
+
+<div class="language-selector">
+  <span class="active">English</span>
+  <span>Dutch</span>
+  <span>German</span>
+</div>
+
 <div class="header">
   <div class="left-info">
-    <div class="search-btn" id="searchBtn">🔍</div>
+    <div class="search-btn" id="searchBtn">
+      <span class="search-icon">🔍</span>
+    </div>
     <div class="search-popup" id="searchPopup">
       <input type="text" placeholder="Search…" id="searchInput">
     </div>
@@ -193,46 +136,73 @@ body {
   </div>
 </div>
 
-<script>
-document.getElementById("date").textContent =
-  "Date: " + new Date().toLocaleDateString();
+</div>
 
-/* Search popup */
+<script>
+/* Fade-in Animation */
+window.addEventListener("load", () => {
+  const content = document.getElementById("pageContent");
+  setTimeout(()=> { content.style.opacity=1; }, 300);
+});
+
+/* Date */
+document.getElementById("date").textContent = "Date: " + new Date().toLocaleDateString();
+
+/* Search Popup */
 const btn = document.getElementById("searchBtn");
 const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.display = "block";
+  popup.style.display="block";
   input.focus();
 };
 
-input.onblur = () => popup.style.display = "none";
-input.onkeydown = e => {
-  if (e.key === "Enter") popup.style.display = "none";
-};
+input.onblur = () => popup.style.display="none";
+input.onkeydown = e => { if(e.key==="Enter") popup.style.display="none"; };
+
+/* Language Selector */
+document.querySelectorAll(".language-selector span").forEach(lang=>{
+  lang.addEventListener("click", ()=>{
+    document.querySelectorAll(".language-selector span").forEach(l=>l.classList.remove("active"));
+    lang.classList.add("active");
+  });
+});
 
 /* Stocks */
 const companies = [
-  "PI Solutions","Bristollery","Rockdaq","R&M 500","P&L INC.",
-  "Rockebank","Mallabank","Cyprus 500","Saula 500","Gren LLC",
-  "Boeing","Airbus","Embraer","Anime inc."
+  // Old PTFS-style
+  "PTFS Alpha","PTFS Beta","PTFS Gamma","PTFS Delta","PTFS Epsilon",
+  "PTFS Zeta","PTFS Eta","PTFS Theta","PTFS Iota","PTFS Kappa",
+  // New business-inspired names, max 2 words, suffix only if single word
+  "Perth LLC","Lukla INC","Dockers Solutions","Mellor Enterprises",
+  "Garry Tech","Boltic Systems","Carrigknock","Haneda Industries","Barra Holdings"
 ];
 
-function updateStock() {
-  const c = companies[Math.floor(Math.random()*companies.length)];
-  const v = (Math.random()*10 - 5).toFixed(2);
-  const up = v >= 0;
-  const arrow = up ? "→" : "←";
+let lastStock = {name:"",value:0};
 
-  document.getElementById("stock").innerHTML =
-    `<span class="stock-name">${c}</span>
-     <span class="${up ? "stock-up" : "stock-down"}">
-     ${v}%<span class="arrow">${arrow}</span></span>`;
+function updateStock() {
+  let c;
+  do { c = companies[Math.floor(Math.random()*companies.length)]; } while(c===lastStock.name);
+
+  // Mild percentage change based on last value
+  let change = (lastStock.value + (Math.random()*2-1.5)).toFixed(2);
+  if(change>10) change=10;
+  if(change<-10) change=-10;
+
+  const up = change>=0;
+  const arrow = up ? "↑" : "↓";
+
+  document.getElementById("stock").innerHTML = `
+    <span class="stock-name">${c}</span>
+    <span class="${up?"stock-up":"stock-down"}">${change}%<span class="arrow">${arrow}</span></span>
+  `;
+
+  lastStock = {name:c,value:parseFloat(change)};
 }
 
 updateStock();
-setInterval(updateStock, 5000);
+setInterval(updateStock,5000);
 </script>
 
 </body>
