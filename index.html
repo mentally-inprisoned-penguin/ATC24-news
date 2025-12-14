@@ -91,7 +91,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   left: 0;
   height: 1px;
   background: #000;
-  top: calc(100% + 4px); /* 4px below last line */
+  top: calc(100% + 4px);
 }
 
 /* Second horizontal line */
@@ -109,7 +109,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   top: 0;
   width: 1px;
   background: #000;
-  /* bottom will be set dynamically to stop at horizontal line */
 }
 
 /* Title */
@@ -202,7 +201,6 @@ window.addEventListener("load", () => {
   const content = document.getElementById("pageContent");
   setTimeout(()=> { content.style.opacity=1; }, 300);
 
-  // Extend horizontal lines to match rightmost edge of login button
   const loginBtn = document.getElementById("loginBtn");
   const headerLine = document.getElementById("headerLine");
   const headerLineDup = document.getElementById("headerLineDuplicate");
@@ -213,13 +211,13 @@ window.addEventListener("load", () => {
   headerLine.style.width = width + "px";
   headerLineDup.style.width = width + "px";
 
-  // Set vertical divider to stop at horizontal line
+  // Vertical divider stops UNDER the horizontal line
   const verticalDivider = document.getElementById("verticalDivider");
   const pageWidth = document.body.clientWidth;
   verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
-  const horizontalLineRect = headerLine.getBoundingClientRect();
+  const horizontalLineRect = headerLineDup.getBoundingClientRect();
   const topOfHeader = verticalDivider.parentElement.getBoundingClientRect().top;
-  verticalDivider.style.height = (horizontalLineRect.top - topOfHeader) + "px";
+  verticalDivider.style.height = (horizontalLineRect.bottom - topOfHeader) + "px";
 });
 
 /* Date */
@@ -231,8 +229,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = btn.offsetTop + "px";          // same Y as button
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // right next to button
+  popup.style.top = btn.offsetTop + "px";          
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; 
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
