@@ -96,11 +96,13 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   left: 172px; /* C aligned under Dutch */
 }
 
-/* Dynamic Horizontal line */
+/* Horizontal line spanning full screen */
 .title-line {
   position: absolute;
   height: 1.5px;
   background-color: #000;
+  left: 0;
+  width: 100%;
 }
 
 /* Login */
@@ -242,23 +244,14 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal line to match left of date & right of login button with equal screen margins */
+/* Adjust horizontal line to span entire screen width 1px below date */
 function adjustLine() {
   const dateElem = document.getElementById("date");
-  const loginBtn = document.querySelector(".login-btn");
   const line = document.getElementById("titleLine");
-
-  const leftX = dateElem.getBoundingClientRect().left;
-  const rightX = loginBtn.getBoundingClientRect().right;
   const topY = dateElem.getBoundingClientRect().bottom + 1; // 1px below date
 
-  // calculate left margin to screen
-  const leftMargin = leftX;
-  // adjust right so that right margin = leftMargin
-  const adjustedRightX = window.innerWidth - leftMargin;
-
-  line.style.left = leftX + "px";
-  line.style.width = (adjustedRightX - leftX) + "px";
+  line.style.left = "0px";
+  line.style.width = window.innerWidth + "px";
   line.style.top = topY + "px";
   line.style.height = "1.5px";
 }
