@@ -86,7 +86,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .header-line {
   position: absolute;
   left: 0;
-  right: 0;
   height: 2px;
   background: #000;
   top: calc(100% + 4px);
@@ -160,15 +159,15 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     </div>
     <div id="date"></div>
     <div>Status: none published</div>
-    <div class="header-line"></div>
+    <div class="header-line" id="headerLine"></div>
   </div>
 
   <div class="title-container">
     <h1 class="news-title">The ATC24 News</h1>
   </div>
 
-  <div class="login-container">
-    <button class="login-btn">LOG IN</button>
+  <div class="login-container" id="loginContainer">
+    <button class="login-btn" id="loginBtn">LOG IN</button>
     <div class="stock" id="stock"></div>
   </div>
 </div>
@@ -240,6 +239,15 @@ function updateStock() {
 
 updateStock();
 setInterval(updateStock,5000);
+
+/* Adjust horizontal line to right edge of login button */
+const headerLine = document.getElementById("headerLine");
+const loginBtn = document.getElementById("loginBtn");
+function updateHeaderLine() {
+  headerLine.style.width = (loginBtn.offsetLeft + loginBtn.offsetWidth) + "px";
+}
+window.addEventListener("load", updateHeaderLine);
+window.addEventListener("resize", updateHeaderLine);
 
 </script>
 
