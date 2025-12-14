@@ -52,6 +52,9 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   border: 2px solid #000;
   border-radius: 50%;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .search-icon::after {
   content: '';
@@ -132,9 +135,11 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 <div class="header">
   <div class="left-info">
     <div style="position: relative; display: flex; align-items: center;">
+      <!-- Search button -->
       <div class="search-btn" id="searchBtn">
         <div class="search-icon"></div>
       </div>
+      <!-- Popup search -->
       <div class="search-popup" id="searchPopup">
         <input type="text" placeholder="Search…" id="searchInput">
       </div>
@@ -172,7 +177,7 @@ const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
   popup.style.top = btn.offsetTop + "px";          // same Y as button
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // next to button
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // right next to button
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
