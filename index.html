@@ -11,9 +11,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; min-height: 300vh; overflow-x: hidden; }
 
-/* Page content fade-in */
-#pageContent { opacity: 0; transition: opacity 1.2s ease-in-out; }
-
 /* Advert */
 .ad-box {
   height: 250px;
@@ -28,7 +25,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 
 /* Header */
 .header { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 20px; position: relative; }
-
 .left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; }
 
 /* Search button */
@@ -45,7 +41,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: relative;
 }
 
-/* Magnifying glass with handle */
+/* Magnifying glass */
 .search-icon {
   position: relative;
   width: 16px;
@@ -85,41 +81,13 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   height: 30px;
 }
 
-/* Horizontal line under date/status */
-.header-line {
-  position: absolute;
-  left: 0;
-  height: 1px;
-  background: #000;
-  top: calc(100% + 4px);
-}
-
-/* Second horizontal line */
-.header-line-duplicate {
-  position: absolute;
-  left: 0;
-  height: 1px;
-  background: #000;
-  top: calc(100% + 4px + 0.5px);
-}
-
-/* Vertical line for 4th section */
-.vertical-divider {
-  position: absolute;
-  width: 1px;
-  background: #000;
-}
+/* Horizontal lines */
+.header-line { position: absolute; left: 0; right: 0; height: 1px; background: #000; top: calc(100% + 4px); }
+.header-line-duplicate { position: absolute; left: 0; right: 0; height: 1px; background: #000; top: calc(100% + 5.5px); } /* +1.5px from original */
 
 /* Title */
 .title-container { flex: 1; text-align: left; position: relative; }
-.news-title { 
-  font-family: "Zilla Slab", serif; 
-  font-size: 60px; 
-  font-weight: 700; 
-  margin: 0; 
-  position: relative; 
-  left: 172px; /* C aligned under Dutch */
-}
+.news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; position: relative; left: 172px; }
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -164,23 +132,20 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 <div class="header">
   <div class="left-info">
     <div style="position: relative; display: flex; align-items: center;">
-      <!-- Search button -->
       <div class="search-btn" id="searchBtn">
         <div class="search-icon">
           <div class="circle"></div>
           <div class="handle"></div>
         </div>
       </div>
-      <!-- Popup search -->
       <div class="search-popup" id="searchPopup">
         <input type="text" placeholder="Search…" id="searchInput">
       </div>
     </div>
     <div id="date"></div>
     <div>Status: none published</div>
-    <div class="header-line" id="headerLine"></div>
-    <div class="header-line-duplicate" id="headerLineDuplicate"></div>
-    <div class="vertical-divider" id="verticalDivider"></div>
+    <div class="header-line"></div>
+    <div class="header-line-duplicate"></div>
   </div>
 
   <div class="title-container">
@@ -188,7 +153,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   </div>
 
   <div class="login-container">
-    <button class="login-btn" id="loginBtn">LOG IN</button>
+    <button class="login-btn">LOG IN</button>
     <div class="stock" id="stock"></div>
   </div>
 </div>
@@ -196,30 +161,10 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 </div>
 
 <script>
+/* Fade-in Animation */
 window.addEventListener("load", () => {
   const content = document.getElementById("pageContent");
   setTimeout(()=> { content.style.opacity=1; }, 300);
-
-  const loginBtn = document.getElementById("loginBtn");
-  const headerLine = document.getElementById("headerLine");
-  const headerLineDup = document.getElementById("headerLineDuplicate");
-  const verticalDivider = document.getElementById("verticalDivider");
-
-  const leftInfoRect = headerLine.parentElement.getBoundingClientRect();
-  const loginRect = loginBtn.getBoundingClientRect();
-  const width = loginRect.right - leftInfoRect.left;
-
-  headerLine.style.width = width + "px";
-  headerLineDup.style.width = width + "px";
-
-  // Vertical divider position and size
-  const horizontalLineRect = headerLineDup.getBoundingClientRect();
-  const pageWidth = document.body.clientWidth;
-  verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
-
-  // Set top of vertical line at 10px below horizontal line
-  verticalDivider.style.top = (horizontalLineRect.top + 10) + "px"; 
-  verticalDivider.style.height = (document.body.scrollHeight - (horizontalLineRect.top + 10)) + "px"; // extend downward
 });
 
 /* Date */
@@ -231,8 +176,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = btn.offsetTop + "px";          
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; 
+  popup.style.top = btn.offsetTop + "px";
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px";
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
@@ -280,6 +225,10 @@ function updateStock() {
 
 updateStock();
 setInterval(updateStock,5000);
+
+/* Log Y-coordinate of duplicate line */
+const dupLine = document.querySelector('.header-line-duplicate');
+console.log("Duplicate horizontal line Y-coordinate:", dupLine.getBoundingClientRect().top);
 
 </script>
 
