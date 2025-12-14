@@ -94,6 +94,15 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   top: calc(100% + 4px); /* 4px below last line */
 }
 
+/* Second horizontal line */
+.header-line-duplicate {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  background: #000;
+  top: calc(100% + 4px + 0.5px); /* 0.5px below the first line */
+}
+
 /* Title */
 .title-container { flex: 1; text-align: left; position: relative; }
 .news-title { 
@@ -163,6 +172,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     <div id="date"></div>
     <div>Status: none published</div>
     <div class="header-line" id="headerLine"></div>
+    <div class="header-line-duplicate" id="headerLineDuplicate"></div>
   </div>
 
   <div class="title-container">
@@ -183,12 +193,16 @@ window.addEventListener("load", () => {
   const content = document.getElementById("pageContent");
   setTimeout(()=> { content.style.opacity=1; }, 300);
 
-  // Extend horizontal line to match rightmost edge of login button
+  // Extend horizontal lines to match rightmost edge of login button
   const loginBtn = document.getElementById("loginBtn");
   const headerLine = document.getElementById("headerLine");
+  const headerLineDup = document.getElementById("headerLineDuplicate");
+  const leftInfoRect = headerLine.parentElement.getBoundingClientRect();
   const loginRect = loginBtn.getBoundingClientRect();
-  const headerRect = headerLine.parentElement.getBoundingClientRect();
-  headerLine.style.width = (loginRect.right - headerRect.left) + "px";
+  const width = loginRect.right - leftInfoRect.left;
+
+  headerLine.style.width = width + "px";
+  headerLineDup.style.width = width + "px";
 });
 
 /* Date */
