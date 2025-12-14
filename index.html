@@ -82,9 +82,10 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 /* Horizontal lines */
 .header-line, .header-line-duplicate {
   position: absolute;
-  height: 2px; /* updated thickness */
+  height: 2px;
   background: #000;
-  left: 20px; /* match left padding of header */
+  left: 20px; /* left margin from screen edge */
+  right: 20px; /* mirror same margin on right */
 }
 .header-line { top: calc(100% + 4px); }
 .header-line-duplicate { top: calc(100% + 6.5px); } /* 2.5px below the first */
@@ -230,18 +231,6 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal lines to match login button and left margin */
-function adjustLines() {
-  const loginBtn = document.querySelector('.login-btn');
-  const leftMargin = 20; // same as header padding
-  const rightX = loginBtn.getBoundingClientRect().right;
-  document.querySelectorAll('.header-line, .header-line-duplicate').forEach(line=>{
-    line.style.width = (rightX - leftMargin) + 'px';
-  });
-}
-
-window.addEventListener('load', adjustLines);
-window.addEventListener('resize', adjustLines);
 </script>
 
 </body>
