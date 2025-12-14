@@ -101,7 +101,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: absolute;
   height: 1.5px;
   background-color: #000;
-  top: 100%; /* placeholder, repositioned via JS */
 }
 
 /* Login */
@@ -243,15 +242,14 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal line to title left & login right with Y = date bottom + 1px */
+/* Adjust horizontal line to start at date and end at login button */
 function adjustLine() {
   const dateElem = document.getElementById("date");
   const loginBtn = document.querySelector(".login-btn");
-  const titleElem = document.querySelector(".news-title");
   const line = document.getElementById("titleLine");
 
-  const leftX = titleElem.getBoundingClientRect().left;
-  const rightX = loginBtn.getBoundingClientRect().right;
+  const leftX = dateElem.getBoundingClientRect().left; // left of date
+  const rightX = loginBtn.getBoundingClientRect().right; // right of login
   const topY = dateElem.getBoundingClientRect().bottom + 1; // 1px below date
 
   line.style.left = leftX + "px";
