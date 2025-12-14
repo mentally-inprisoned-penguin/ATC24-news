@@ -27,23 +27,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: relative;
 }
 
-/* Vertical divider */
-.vertical-divider {
-  position: fixed;
-  right: 25%;
-  bottom: 0;
-  width: 1.2px;
-  background: #d0d0d0;
-  pointer-events: none;
-  animation: vertLineUp 0.6s linear forwards;
-}
-
-/* Vertical line animation (stop at horizontal line) */
-@keyframes vertLineUp {
-  from { top: 100%; }
-  to { top: 68px; } /* horizontal line Y coordinate + margin */
-}
-
 /* Header */
 .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
 
@@ -60,7 +43,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 }
 .search-btn:hover { background: #f0f0f0; }
 
-/* Simplified black & white magnifying glass */
+/* Simplified magnifying glass (centered) */
 .search-icon {
   width: 16px; height: 16px;
   border: 2px solid #000;
@@ -72,38 +55,23 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: absolute;
   width: 8px; height: 2px;
   background: #000;
-  transform: rotate(45deg);
   top: 12px; left: 12px;
+  transform: rotate(45deg);
   transform-origin: left top;
 }
 
-/* Popup search aligned with button Y */
+/* Popup search aligned with the square Y */
 .search-popup {
   position: absolute;
-  left: 45px; top: 0;
+  left: 50px; /* next to the square */
   padding: 6px; border: 2px solid black;
   display: none;
-  animation: blink 2s infinite;
 }
-@keyframes blink { 0%,50%{border-color:black} 51%,100%{border-color:transparent} }
 .search-popup input { border: none; outline: none; font-size: 15px; }
 
 /* Title */
-.title-container { 
-  position: absolute;
-  left: 50%; 
-  transform: translateX(-50%);
-}
+.title-container { flex: 1; text-align: center; }
 .news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; }
-
-/* Horizontal divider */
-.horizontal-divider { 
-  width: calc(100% - 6px); 
-  height: 0.2px; 
-  background: black; 
-  margin-top: 6.5px; /* moved 0.5px downward */
-  margin-left: 3px; 
-}
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -137,8 +105,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   [Contact domtom3401 to have your advertisement displayed here]
 </div>
 
-<div class="vertical-divider"></div>
-
 <div id="pageContent">
 
 <div class="language-selector">
@@ -161,7 +127,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 
   <div class="title-container">
     <h1 class="news-title">The ATC24 News</h1>
-    <div class="horizontal-divider"></div>
   </div>
 
   <div class="login-container">
@@ -182,14 +147,14 @@ window.addEventListener("load", () => {
 /* Date */
 document.getElementById("date").textContent = "Date: " + new Date().toLocaleDateString();
 
-/* Search Popup aligned with button Y */
+/* Search Popup aligned with the square Y */
 const btn = document.getElementById("searchBtn");
 const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
   const rect = btn.getBoundingClientRect();
-  popup.style.top = rect.top + "px";
+  popup.style.top = rect.top + "px"; // Y coordinate matches the square
   popup.style.display="block";
   input.focus();
 };
