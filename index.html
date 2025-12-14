@@ -89,7 +89,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 .header-line {
   position: absolute;
   left: 0;
-  height: 1px; /* thickness */
+  height: 1px;
   background: #000;
   top: calc(100% + 4px); /* 4px below last line */
 }
@@ -100,7 +100,16 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   left: 0;
   height: 1px;
   background: #000;
-  top: calc(100% + 4px + 0.5px); /* 0.5px below the first line */
+  top: calc(100% + 4px + 0.5px);
+}
+
+/* Vertical line for 4th section */
+.vertical-divider {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  background: #000;
+  /* bottom will be set dynamically to stop at horizontal line */
 }
 
 /* Title */
@@ -173,6 +182,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     <div>Status: none published</div>
     <div class="header-line" id="headerLine"></div>
     <div class="header-line-duplicate" id="headerLineDuplicate"></div>
+    <div class="vertical-divider" id="verticalDivider"></div>
   </div>
 
   <div class="title-container">
@@ -188,7 +198,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 </div>
 
 <script>
-/* Fade-in Animation */
 window.addEventListener("load", () => {
   const content = document.getElementById("pageContent");
   setTimeout(()=> { content.style.opacity=1; }, 300);
@@ -203,6 +212,14 @@ window.addEventListener("load", () => {
 
   headerLine.style.width = width + "px";
   headerLineDup.style.width = width + "px";
+
+  // Set vertical divider to stop at horizontal line
+  const verticalDivider = document.getElementById("verticalDivider");
+  const pageWidth = document.body.clientWidth;
+  verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
+  const horizontalLineRect = headerLine.getBoundingClientRect();
+  const topOfHeader = verticalDivider.parentElement.getBoundingClientRect().top;
+  verticalDivider.style.height = (horizontalLineRect.top - topOfHeader) + "px";
 });
 
 /* Date */
