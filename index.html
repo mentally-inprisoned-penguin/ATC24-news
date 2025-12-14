@@ -64,13 +64,13 @@
       font-family: Arial, Helvetica, sans-serif;
       font-size: 14px;
       color: #333;
+      width: 220px; /* LOCKED to prevent shifting */
     }
 
     /* Search */
     .search-box {
       width: 40px;
       height: 40px;
-      background: #fff;
       border: 1px solid #d0d0d0;
       border-radius: 5px;
       display: flex;
@@ -85,50 +85,26 @@
       width: 220px;
     }
 
+    .search-icon {
+      font-size: 18px;
+      color: #000;
+      margin-left: 10px;
+      margin-right: 6px;
+      filter: grayscale(100%);
+    }
+
     .search-input {
       border: none;
       outline: none;
       font-size: 15px;
       flex: 1;
       background: transparent;
-      padding: 0 8px;
+      padding-right: 8px;
       display: none;
     }
 
     .search-box.active .search-input {
       display: block;
-    }
-
-    /* Magnifying glass */
-    .magnifier {
-      position: relative;
-      width: 18px;
-      height: 18px;
-      margin-left: 10px;
-      margin-right: 6px;
-    }
-
-    .magnifier::before {
-      content: "";
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border: 2px solid #000;
-      border-radius: 50%;
-      background: #fff;
-      top: 0;
-      left: 0;
-    }
-
-    .magnifier::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 8px;
-      background: #000;
-      top: 10px;
-      left: 11px;
-      transform: rotate(45deg);
     }
 
     /* Title */
@@ -138,7 +114,7 @@
       font-weight: 700;
       text-align: center;
       flex: 1;
-      margin-top: 0.5px;
+      margin: 0; /* HARD ZERO */
     }
 
     /* Login */
@@ -146,15 +122,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 140px; /* LOCK width */
     }
 
     .login-btn {
+      width: 100%;
       background-color: #417093;
       color: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
       font-size: 16px;
-      padding: 10px 20px;
+      padding: 10px 0;
       border: none;
       border-radius: 4px;
       cursor: pointer;
@@ -162,9 +140,17 @@
 
     /* Stock ticker */
     .stock-ticker {
-      margin-top: 0.7px;
+      margin-top: 1.5px;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .stock-name {
+      color: #000;
     }
 
     .stock-up {
@@ -172,7 +158,7 @@
     }
 
     .stock-down {
-      color: red;
+      color: #BE595B;
     }
   </style>
 </head>
@@ -192,7 +178,7 @@
   <div class="info-title-container">
     <div class="top-left-info">
       <div class="search-box" id="searchBox">
-        <div class="magnifier"></div>
+        <span class="search-icon">🔍</span>
         <input class="search-input" placeholder="Search..." />
       </div>
       <div id="date"></div>
@@ -235,12 +221,16 @@
 
     // Stock ticker
     const companies = [
-      "PI Solutions", "Bristollery", "Rockdaq", "R&M 500", "P&L INC.",
-      "Rockebank", "Mallabank", "Cyprus 500", "Saula 500", "Gren LLC",
-      "Boeing", "Airbus", "Embraer", "Anime inc."
+      "PI Solutions","Bristollery","Rockdaq","R&M 500","P&L INC.",
+      "Rockebank","Mallabank","Cyprus 500","Saula 500","Gren LLC",
+      "Boeing","Airbus","Embraer","Anime inc."
     ];
 
     let lastCompany = "";
+
+    function shorten(name, max = 12) {
+      return name.length > max ? name.slice(0, max - 1) + "…" : name;
+    }
 
     function updateStock() {
       let company;
@@ -252,10 +242,15 @@
 
       const change = (Math.random() * 10 - 5).toFixed(2);
       const up = change >= 0;
+      const arrow = up ? "▲" : "▼";
 
       const ticker = document.getElementById("stockTicker");
-      ticker.className = "stock-ticker " + (up ? "stock-up" : "stock-down");
-      ticker.textContent = `${company} ${up ? "+" : ""}${change}%`;
+      ticker.innerHTML = `
+        <span class="stock-name">${shorten(company)}</span>
+        <span class="${up ? "stock-up" : "stock-down"}">
+          ${arrow} ${Math.abs(change)}%
+        </span>
+      `;
     }
 
     updateStock();
