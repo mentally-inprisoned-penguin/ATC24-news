@@ -216,8 +216,10 @@ window.addEventListener("load", () => {
   const horizontalLineRect = headerLineDup.getBoundingClientRect();
   const pageWidth = document.body.clientWidth;
   verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
-  verticalDivider.style.top = horizontalLineRect.top + "px"; // **top aligns exactly with horizontal line**
-  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.top) + "px"; // extend downwards
+
+  // Set top of vertical line at the horizontal line Y
+  verticalDivider.style.top = horizontalLineRect.top + "px"; 
+  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.top) + "px"; // extend downward
 });
 
 /* Date */
