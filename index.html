@@ -217,9 +217,9 @@ window.addEventListener("load", () => {
   const pageWidth = document.body.clientWidth;
   verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
 
-  // Set top of vertical line at the horizontal line Y
-  verticalDivider.style.top = horizontalLineRect.top + "px"; 
-  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.top) + "px"; // extend downward
+  // Set top of vertical line at 10px below horizontal line
+  verticalDivider.style.top = (horizontalLineRect.top + 10) + "px"; 
+  verticalDivider.style.height = (document.body.scrollHeight - (horizontalLineRect.top + 10)) + "px"; // extend downward
 });
 
 /* Date */
