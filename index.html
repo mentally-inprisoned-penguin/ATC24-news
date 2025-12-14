@@ -10,11 +10,15 @@
 
   <style>
     /* Reset */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: Georgia, "Times New Roman", Times, serif;
-      background-color: #fff;
+      background-color: #ffffff;
       min-height: 500vh;
     }
 
@@ -27,84 +31,96 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
       font-size: 24px;
+      text-align: center;
+      padding: 20px;
     }
 
-    /* Info + Title + Actions */
+    /* Header Row */
     .info-title-container {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 10px 20px;
     }
 
+    /* Top-left info */
     .top-left-info {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: 300;
       font-size: 14px;
-      color: #333;
+      color: #333333;
+      line-height: 1.4;
     }
 
+    /* Center title */
     .news-title {
       font-family: "Zilla Slab", serif;
       font-size: 60px;
       font-weight: 700;
+      color: #000000;
       text-align: center;
       flex: 1;
       margin: 0 20px;
+    }
+
+    /* Right actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     /* Search box */
     .search-box {
       width: 40px;
       height: 40px;
-      background: #fff;
+      background-color: #ffffff;
       border: 1px solid #d0d0d0;
       border-radius: 5px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 20px;
       cursor: pointer;
-      transition: background 0.2s, width 0.3s;
+      transition: width 0.25s ease, background-color 0.2s ease;
       overflow: hidden;
-      position: relative;
     }
 
-    .search-box:hover { background: #f0f0f0; }
+    .search-box:hover {
+      background-color: #f0f0f0;
+    }
 
     .search-box.active {
       width: 200px;
-      justify-content: flex-start;
     }
 
-    .search-box .search-icon {
-      margin-left: 8px;
+    .search-icon {
+      font-size: 18px;
+      margin-left: 10px;
+      margin-right: 6px;
     }
 
-    .search-box input {
-      display: none;
+    .search-input {
+      flex: 1;
       border: none;
       outline: none;
-      padding: 0 8px;
-      font-size: 16px;
-      flex: 1;
+      font-size: 15px;
       background: transparent;
+      display: none;
     }
 
-    .search-box.active input {
+    .search-box.active .search-input {
       display: block;
     }
 
-    /* Google-style Log In button */
+    /* Login button */
     .login-btn {
       background-color: #1a73e8;
       color: #ffffff;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
-      font-size: 16px; /* ~2/3 of button height */
+      font-size: 16px;
       padding: 10px 20px;
       border: none;
       border-radius: 4px;
@@ -116,17 +132,13 @@
       background-color: #1669c1;
     }
 
-    /* Container for search + login */
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
     /* Spacer content */
-    .content { height: 300vh; }
+    .content {
+      height: 300vh;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Advertisement -->
@@ -134,7 +146,7 @@
     Contact domtom3401 to have your advertisement displayed here
   </div>
 
-  <!-- Info + Title + Search/Login -->
+  <!-- Header -->
   <div class="info-title-container">
     <div class="top-left-info">
       <div id="date">Date: --/--/----</div>
@@ -146,8 +158,13 @@
     <div class="header-actions">
       <div class="search-box" id="searchBox">
         <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Search..." />
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search..."
+        />
       </div>
+
       <button class="login-btn">LOG IN</button>
     </div>
   </div>
@@ -155,14 +172,13 @@
   <div class="content"></div>
 
   <script>
-    // Display today's date
+    // Date
     const dateElem = document.getElementById("date");
-    const today = new Date();
-    dateElem.textContent = "Date: " + today.toLocaleDateString();
+    dateElem.textContent = "Date: " + new Date().toLocaleDateString();
 
-    // Search box toggle
+    // Search box behavior
     const searchBox = document.getElementById("searchBox");
-    const searchInput = searchBox.querySelector("input");
+    const searchInput = searchBox.querySelector(".search-input");
 
     searchBox.addEventListener("click", () => {
       if (!searchBox.classList.contains("active")) {
@@ -171,9 +187,10 @@
       }
     });
 
-    searchInput.addEventListener("focusout", () => {
+    searchInput.addEventListener("blur", () => {
       searchBox.classList.remove("active");
     });
   </script>
+
 </body>
 </html>
