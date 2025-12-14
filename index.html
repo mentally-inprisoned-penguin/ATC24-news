@@ -243,7 +243,7 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal line to date left & login right with 3.2px margin */
+/* Adjust horizontal line to date left & login right with 4px margin below date/status */
 function adjustLine() {
   const dateElem = document.getElementById("date");
   const loginBtn = document.querySelector(".login-btn");
@@ -251,7 +251,7 @@ function adjustLine() {
 
   const leftX = dateElem.getBoundingClientRect().left;
   const rightX = loginBtn.getBoundingClientRect().right;
-  const topY = dateElem.getBoundingClientRect().bottom + 3.2; // <- changed from 6.5
+  const topY = dateElem.getBoundingClientRect().bottom + 4; // <- changed margin
 
   line.style.left = leftX + "px";
   line.style.width = (rightX - leftX) + "px";
