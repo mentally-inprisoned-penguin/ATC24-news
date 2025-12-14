@@ -73,8 +73,8 @@
       gap: 10px;
     }
 
-    /* Search box */
-    .search-box {
+    /* Search button (original style) */
+    .search-btn {
       width: 40px;
       height: 40px;
       background-color: #ffffff;
@@ -82,36 +82,14 @@
       border-radius: 5px;
       display: flex;
       align-items: center;
-      cursor: pointer;
-      transition: width 0.25s ease, background-color 0.2s ease;
-      overflow: hidden;
-    }
-
-    .search-box:hover {
-      background-color: #f0f0f0;
-    }
-
-    .search-box.active {
-      width: 200px;
-    }
-
-    .search-icon {
+      justify-content: center;
       font-size: 18px;
-      margin-left: 10px;
-      margin-right: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
     }
 
-    .search-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      background: transparent;
-      display: none;
-    }
-
-    .search-box.active .search-input {
-      display: block;
+    .search-btn:hover {
+      background-color: #f0f0f0;
     }
 
     /* Login button */
@@ -156,15 +134,7 @@
     <h1 class="news-title">The ATC24 News</h1>
 
     <div class="header-actions">
-      <div class="search-box" id="searchBox">
-        <span class="search-icon">🔍</span>
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Search..."
-        />
-      </div>
-
+      <div class="search-btn" title="Search">🔍</div>
       <button class="login-btn">LOG IN</button>
     </div>
   </div>
@@ -173,23 +143,8 @@
 
   <script>
     // Date
-    const dateElem = document.getElementById("date");
-    dateElem.textContent = "Date: " + new Date().toLocaleDateString();
-
-    // Search box behavior
-    const searchBox = document.getElementById("searchBox");
-    const searchInput = searchBox.querySelector(".search-input");
-
-    searchBox.addEventListener("click", () => {
-      if (!searchBox.classList.contains("active")) {
-        searchBox.classList.add("active");
-        searchInput.focus();
-      }
-    });
-
-    searchInput.addEventListener("blur", () => {
-      searchBox.classList.remove("active");
-    });
+    document.getElementById("date").textContent =
+      "Date: " + new Date().toLocaleDateString();
   </script>
 
 </body>
