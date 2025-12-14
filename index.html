@@ -19,30 +19,21 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   height: 250px;
   background: #f8f8f8;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 24px;
-  overflow: hidden;
   position: relative;
-}
-.ad-text {
-  display: inline-block;
-  transform: translateY(-100%);
-  animation: slideDown 1.5s forwards;
-}
-@keyframes slideDown {
-  to { transform: translateY(0); }
 }
 
 /* Vertical divider (right-most quarter) */
 .vertical-divider {
   position: fixed;
   right: 25%;
-  top: 0;
-  bottom: 0; /* extend down infinitely */
-  width: 1px;
+  top: 32px; /* stops at horizontal line */
+  bottom: 0; 
+  width: 1.2px;
   background: #d0d0d0;
   pointer-events: none;
 }
@@ -50,7 +41,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 /* Header */
 .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: relative; }
 
-.left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; }
+.left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; display: flex; align-items: center; gap: 6px; }
 
 /* Search */
 .search-btn {
@@ -58,28 +49,35 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   border: 1px solid #d0d0d0; border-radius: 5px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: background 0.2s;
-  background: #fff; margin-bottom: 6px;
+  background: #fff;
 }
 .search-btn:hover { background: #f0f0f0; }
 .search-icon { font-size: 18px; color: #000; }
 
-/* Popup search */
-.search-popup {
-  position: absolute;
-  left: 45px; top: 0;
-  padding: 6px; border: 2px solid black;
-  display: none;
-  animation: blink 2s infinite;
+/* Search bar on same Y */
+.search-bar {
+  display: inline-block;
+  height: 30px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 0 6px;
+  font-size: 14px;
+  outline: none;
+  margin-left: 6px;
 }
-@keyframes blink { 0%,50%{border-color:black} 51%,100%{border-color:transparent} }
-.search-popup input { border: none; outline: none; font-size: 15px; }
 
 /* Title */
-.title-container { flex: 1; text-align: center; }
+.title-container { flex: 1; text-align: left; position: relative; }
 .news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; }
 
 /* Horizontal divider */
-.horizontal-divider { width: 100%; height: 2px; background: black; margin-top: 6px; }
+.horizontal-divider { 
+  width: calc(100% - 6px); 
+  height: 0.2px; 
+  background: black; 
+  margin-top: 6px; 
+  margin-left: 3px; 
+}
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -110,7 +108,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 <body>
 
 <div class="ad-box">
-  <div class="ad-text">[Contact domtom3401 to have your advertisement displayed here]</div>
+  [Contact domtom3401 to have your advertisement displayed here]
 </div>
 
 <div class="vertical-divider"></div>
@@ -128,15 +126,13 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
     <div class="search-btn" id="searchBtn">
       <span class="search-icon">🔍</span>
     </div>
-    <div class="search-popup" id="searchPopup">
-      <input type="text" placeholder="Search…" id="searchInput">
-    </div>
+    <input class="search-bar" id="searchInput" type="text" placeholder="Search…" />
     <div id="date"></div>
     <div>Status: none published</div>
   </div>
 
   <div class="title-container">
-    <h1 class="news-title">The ATC24 News</h1>
+    <h1 class="news-title" id="newsTitle">The ATC24 News</h1>
     <div class="horizontal-divider"></div>
   </div>
 
@@ -155,31 +151,21 @@ window.addEventListener("load", () => {
   setTimeout(()=> { content.style.opacity=1; }, 300);
 });
 
-/* Advert animation */
-const adText = document.querySelector('.ad-text');
-adText.style.transform = 'translateY(-100%)';
-adText.style.opacity = 0;
-setTimeout(()=>{ 
-  adText.style.transition = 'transform 1.5s ease, opacity 1.5s ease';
-  adText.style.transform = 'translateY(0)';
-  adText.style.opacity = 1;
-}, 100);
+/* Align title C to Dutch */
+const dutchSpan = document.querySelector(".language-selector span:nth-child(2)");
+const title = document.getElementById("newsTitle");
+const dutchX = dutchSpan.getBoundingClientRect().left + window.scrollX;
+title.style.position = "relative";
+title.style.left = `${dutchX}px`;
 
 /* Date */
 document.getElementById("date").textContent = "Date: " + new Date().toLocaleDateString();
 
-/* Search Popup */
+/* Search bar focus */
 const btn = document.getElementById("searchBtn");
-const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
-btn.onclick = () => {
-  popup.style.display="block";
-  input.focus();
-};
-
-input.onblur = () => popup.style.display="none";
-input.onkeydown = e => { if(e.key==="Enter") popup.style.display="none"; };
+btn.onclick = () => input.focus();
 
 /* Language Selector */
 document.querySelectorAll(".language-selector span").forEach(lang=>{
@@ -191,8 +177,6 @@ document.querySelectorAll(".language-selector span").forEach(lang=>{
 
 /* Stocks */
 const companies = [
-  "PTFS Alpha","PTFS Beta","PTFS Gamma","PTFS Delta","PTFS Epsilon",
-  "PTFS Zeta","PTFS Eta","PTFS Theta","PTFS Iota","PTFS Kappa",
   "Perth LLC","Lukla INC","Dockers Solutions","Mellor Enterprises",
   "Garry Tech","Boltic Systems","Carrigknock","Haneda Industries","Barra Holdings"
 ];
@@ -216,7 +200,7 @@ function updateStock() {
   while(true){
     stockDiv.innerHTML = `<span class="stock-name">${nameToShow}</span> <span class="${up?"stock-up":"stock-down"}">${change}%<span class="arrow">${arrow}</span></span>`;
     if(stockDiv.scrollWidth <= stockDiv.clientWidth || nameToShow.length <= 4) break;
-    nameToShow = nameToShow.slice(0,-1); // remove last char
+    nameToShow = nameToShow.slice(0,-1);
   }
 
   lastStock = {name:c,value:parseFloat(change)};
