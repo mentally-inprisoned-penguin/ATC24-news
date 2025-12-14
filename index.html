@@ -101,7 +101,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: absolute;
   height: 1.5px;
   background-color: #000;
-  top: 100%; /* placeholder, will be repositioned with JS */
+  top: 100%; /* placeholder, repositioned via JS */
 }
 
 /* Login */
@@ -243,15 +243,16 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal line to date left & login right with 1px below date/status */
+/* Adjust horizontal line to title left & login right with Y = date bottom + 1px */
 function adjustLine() {
   const dateElem = document.getElementById("date");
   const loginBtn = document.querySelector(".login-btn");
+  const titleElem = document.querySelector(".news-title");
   const line = document.getElementById("titleLine");
 
-  const leftX = dateElem.getBoundingClientRect().left;
+  const leftX = titleElem.getBoundingClientRect().left;
   const rightX = loginBtn.getBoundingClientRect().right;
-  const topY = dateElem.getBoundingClientRect().bottom + 1; // <- 1px margin
+  const topY = dateElem.getBoundingClientRect().bottom + 1; // 1px below date
 
   line.style.left = leftX + "px";
   line.style.width = (rightX - leftX) + "px";
