@@ -99,9 +99,9 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 /* Horizontal line under title */
 .title-line {
   width: 100%;
-  height: 2px;
+  height: 1.5px; /* thinner line */
   background-color: #000;
-  margin-top: 5px; /* 5px below title */
+  margin-top: 6.5px; /* distance from title */
 }
 
 /* Login */
@@ -193,8 +193,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = btn.offsetTop + "px";          // same Y as button
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // right next to button
+  popup.style.top = btn.offsetTop + "px";          
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; 
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
