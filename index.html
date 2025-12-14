@@ -34,6 +34,24 @@
       font-size: 24px;
     }
 
+    /* Language selector */
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 2.5px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    .language-selector span {
+      cursor: pointer;
+    }
+
+    .language-selector span.active {
+      font-weight: bold;
+    }
+
     /* Header */
     .info-title-container {
       display: flex;
@@ -59,12 +77,8 @@
       align-items: center;
       cursor: pointer;
       overflow: hidden;
-      transition: width 0.25s ease, background-color 0.2s ease;
+      transition: width 0.25s ease;
       margin-bottom: 6px;
-    }
-
-    .search-box:hover {
-      background-color: #f0f0f0;
     }
 
     .search-box.active {
@@ -96,26 +110,25 @@
 
     .magnifier::before {
       content: "";
+      position: absolute;
       width: 12px;
       height: 12px;
       border: 2px solid #000;
       border-radius: 50%;
       background: #fff;
-      position: absolute;
       top: 0;
       left: 0;
     }
 
     .magnifier::after {
       content: "";
+      position: absolute;
       width: 2px;
       height: 8px;
       background: #000;
-      position: absolute;
       top: 10px;
       left: 11px;
       transform: rotate(45deg);
-      transform-origin: top;
     }
 
     /* Title */
@@ -125,11 +138,18 @@
       font-weight: 700;
       text-align: center;
       flex: 1;
+      margin-top: 0.5px;
     }
 
     /* Login */
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .login-btn {
-      background-color: #1a73e8;
+      background-color: #417093;
       color: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
@@ -140,27 +160,19 @@
       cursor: pointer;
     }
 
-    .login-btn:hover {
-      background-color: #1669c1;
-    }
-
-    /* Language selector */
-    .language-selector {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 15px;
+    /* Stock ticker */
+    .stock-ticker {
+      margin-top: 0.7px;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 13px;
     }
 
-    .language-selector span {
-      cursor: pointer;
-      font-weight: normal;
+    .stock-up {
+      color: green;
     }
 
-    .language-selector span.active {
-      font-weight: bold;
+    .stock-down {
+      color: red;
     }
   </style>
 </head>
@@ -171,36 +183,35 @@
     Contact domtom3401 to have your advertisement displayed here
   </div>
 
-  <div class="info-title-container">
-    <div class="top-left-info">
-
-      <div class="search-box" id="searchBox">
-        <div class="magnifier"></div>
-        <input type="text" class="search-input" placeholder="Search..." />
-      </div>
-
-      <div id="date">Date: --/--/----</div>
-      <div>Status: none published</div>
-    </div>
-
-    <h1 class="news-title">The ATC24 News</h1>
-
-    <button class="login-btn">LOG IN</button>
-  </div>
-
-  <!-- Language selector -->
   <div class="language-selector">
     <span class="active">English</span>
     <span>Dutch</span>
     <span>German</span>
   </div>
 
+  <div class="info-title-container">
+    <div class="top-left-info">
+      <div class="search-box" id="searchBox">
+        <div class="magnifier"></div>
+        <input class="search-input" placeholder="Search..." />
+      </div>
+      <div id="date"></div>
+      <div>Status: none published</div>
+    </div>
+
+    <h1 class="news-title">The ATC24 News</h1>
+
+    <div class="login-container">
+      <button class="login-btn">LOG IN</button>
+      <div class="stock-ticker" id="stockTicker"></div>
+    </div>
+  </div>
+
   <script>
-    // Date
     document.getElementById("date").textContent =
       "Date: " + new Date().toLocaleDateString();
 
-    // Search box
+    // Search
     const searchBox = document.getElementById("searchBox");
     const searchInput = searchBox.querySelector(".search-input");
 
@@ -221,6 +232,34 @@
         lang.classList.add("active");
       });
     });
+
+    // Stock ticker
+    const companies = [
+      "PI Solutions", "Bristollery", "Rockdaq", "R&M 500", "P&L INC.",
+      "Rockebank", "Mallabank", "Cyprus 500", "Saula 500", "Gren LLC",
+      "Boeing", "Airbus", "Embraer", "Anime inc."
+    ];
+
+    let lastCompany = "";
+
+    function updateStock() {
+      let company;
+      do {
+        company = companies[Math.floor(Math.random() * companies.length)];
+      } while (company === lastCompany);
+
+      lastCompany = company;
+
+      const change = (Math.random() * 10 - 5).toFixed(2);
+      const up = change >= 0;
+
+      const ticker = document.getElementById("stockTicker");
+      ticker.className = "stock-ticker " + (up ? "stock-up" : "stock-down");
+      ticker.textContent = `${company} ${up ? "+" : ""}${change}%`;
+    }
+
+    updateStock();
+    setInterval(updateStock, 5000);
   </script>
 
 </body>
