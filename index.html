@@ -90,9 +90,9 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   position: absolute;
   left: 0;
   right: 0;
-  height: 4px; /* 4px thick */
+  height: 1px; /* reset thickness */
   background: #000;
-  top: calc(100% + 1px); /* below last line of date/status */
+  top: calc(100% + 4px); /* moved down 4px */
 }
 
 /* Title */
@@ -156,7 +156,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
           <div class="handle"></div>
         </div>
       </div>
-      <!-- Popup search next to button -->
+      <!-- Popup search -->
       <div class="search-popup" id="searchPopup">
         <input type="text" placeholder="Search…" id="searchInput">
       </div>
@@ -194,9 +194,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  // position popup at the same Y as button
-  popup.style.top = btn.offsetTop + "px";          
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // next to button
+  popup.style.top = btn.offsetTop + "px";          // same Y as button
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // right next to button
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
