@@ -28,6 +28,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 
 /* Header */
 .header { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 20px; position: relative; }
+
 .left-info { width: 220px; font-family: Arial, sans-serif; font-size: 14px; position: relative; }
 
 /* Search button */
@@ -43,6 +44,8 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   background: #fff; 
   position: relative;
 }
+
+/* Magnifying glass with handle */
 .search-icon {
   position: relative;
   width: 16px;
@@ -91,6 +94,14 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   margin: 0; 
   position: relative; 
   left: 172px; /* C aligned under Dutch */
+}
+
+/* Horizontal line under title */
+.title-line {
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  margin-top: 5px; /* 5px below title */
 }
 
 /* Login */
@@ -154,10 +165,12 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 
   <div class="title-container">
     <h1 class="news-title">The ATC24 News</h1>
+    <!-- Insert horizontal line -->
+    <div class="title-line"></div>
   </div>
 
-  <div class="login-container" id="loginContainer">
-    <button class="login-btn" id="loginBtn">LOG IN</button>
+  <div class="login-container">
+    <button class="login-btn">LOG IN</button>
     <div class="stock" id="stock"></div>
   </div>
 </div>
@@ -180,8 +193,8 @@ const popup = document.getElementById("searchPopup");
 const input = document.getElementById("searchInput");
 
 btn.onclick = () => {
-  popup.style.top = btn.offsetTop + "px";          
-  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; 
+  popup.style.top = btn.offsetTop + "px";          // same Y as button
+  popup.style.left = (btn.offsetLeft + btn.offsetWidth + 5) + "px"; // right next to button
   popup.style.display = (popup.style.display === "block") ? "none" : "block";
   if(popup.style.display === "block") input.focus();
 };
