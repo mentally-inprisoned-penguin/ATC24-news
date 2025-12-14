@@ -106,7 +106,7 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 /* Vertical line for 4th section */
 .vertical-divider {
   position: absolute;
-  top: 0;
+  top: 0; /* Will be adjusted in JS */
   width: 1px;
   background: #000;
 }
@@ -204,6 +204,8 @@ window.addEventListener("load", () => {
   const loginBtn = document.getElementById("loginBtn");
   const headerLine = document.getElementById("headerLine");
   const headerLineDup = document.getElementById("headerLineDuplicate");
+  const verticalDivider = document.getElementById("verticalDivider");
+
   const leftInfoRect = headerLine.parentElement.getBoundingClientRect();
   const loginRect = loginBtn.getBoundingClientRect();
   const width = loginRect.right - leftInfoRect.left;
@@ -211,13 +213,12 @@ window.addEventListener("load", () => {
   headerLine.style.width = width + "px";
   headerLineDup.style.width = width + "px";
 
-  // Vertical divider stops UNDER the horizontal line
-  const verticalDivider = document.getElementById("verticalDivider");
+  // Vertical divider position and size
+  const horizontalLineRect = headerLineDup.getBoundingClientRect();
   const pageWidth = document.body.clientWidth;
   verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
-  const horizontalLineRect = headerLineDup.getBoundingClientRect();
-  const topOfHeader = verticalDivider.parentElement.getBoundingClientRect().top;
-  verticalDivider.style.height = (horizontalLineRect.bottom - topOfHeader) + "px";
+  verticalDivider.style.top = horizontalLineRect.bottom + "px"; // start BELOW horizontal line
+  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.bottom) + "px"; // extend downwards
 });
 
 /* Date */
