@@ -242,18 +242,23 @@ function updateStock() {
 updateStock();
 setInterval(updateStock,5000);
 
-/* Adjust horizontal line to start at date and end at login button */
+/* Adjust horizontal line to match left of date & right of login button with equal screen margins */
 function adjustLine() {
   const dateElem = document.getElementById("date");
   const loginBtn = document.querySelector(".login-btn");
   const line = document.getElementById("titleLine");
 
-  const leftX = dateElem.getBoundingClientRect().left; // left of date
-  const rightX = loginBtn.getBoundingClientRect().right; // right of login
+  const leftX = dateElem.getBoundingClientRect().left;
+  const rightX = loginBtn.getBoundingClientRect().right;
   const topY = dateElem.getBoundingClientRect().bottom + 1; // 1px below date
 
+  // calculate left margin to screen
+  const leftMargin = leftX;
+  // adjust right so that right margin = leftMargin
+  const adjustedRightX = window.innerWidth - leftMargin;
+
   line.style.left = leftX + "px";
-  line.style.width = (rightX - leftX) + "px";
+  line.style.width = (adjustedRightX - leftX) + "px";
   line.style.top = topY + "px";
   line.style.height = "1.5px";
 }
