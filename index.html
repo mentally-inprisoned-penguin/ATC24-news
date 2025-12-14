@@ -73,9 +73,16 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
   height: 30px;
 }
 
-/* Title (locked in position) */
-.title-container { flex: 1; text-align: center; }
-.news-title { font-family: "Zilla Slab", serif; font-size: 60px; font-weight: 700; margin: 0; }
+/* Title (locked Y, horizontal adjusted for alignment) */
+.title-container { flex: 1; text-align: left; position: relative; }
+.news-title { 
+  font-family: "Zilla Slab", serif; 
+  font-size: 60px; 
+  font-weight: 700; 
+  margin: 0; 
+  position: relative; 
+  left: 172px; /* Adjusted so C aligns under T in Dutch */
+}
 
 /* Login */
 .login-container { width: 120px; text-align: center; position: relative; }
@@ -161,7 +168,6 @@ btn.onclick = () => {
   popup.style.top = rect.top + "px"; // same Y as button
   popup.style.left = rect.right + 5 + "px"; // right next to button
   popup.style.display = "block";
-  input.focus();
 };
 input.onblur = () => popup.style.display="none";
 input.onkeydown = e => { if(e.key==="Enter") popup.style.display="none"; };
