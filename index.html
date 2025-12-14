@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The ATC24 News</title>
 
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -19,7 +17,7 @@
     body {
       font-family: Georgia, "Times New Roman", Times, serif;
       background-color: #ffffff;
-      min-height: 500vh;
+      min-height: 300vh;
     }
 
     /* Advertisement */
@@ -34,11 +32,9 @@
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
       font-size: 24px;
-      text-align: center;
-      padding: 20px;
     }
 
-    /* Header Row */
+    /* Header */
     .info-title-container {
       display: flex;
       align-items: center;
@@ -46,89 +42,95 @@
       padding: 10px 20px;
     }
 
-    /* Top-left info */
     .top-left-info {
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: 300;
       font-size: 14px;
-      color: #333333;
-      line-height: 1.4;
+      color: #333;
     }
 
-    /* Top-left search button */
-    .top-left-search {
+    /* Search */
+    .search-box {
       width: 40px;
       height: 40px;
-      background-color: #ffffff;
+      background: #fff;
       border: 1px solid #d0d0d0;
       border-radius: 5px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 6px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      overflow: hidden;
+      transition: width 0.25s ease, background-color 0.2s ease;
+      margin-bottom: 6px;
     }
 
-    .top-left-search:hover {
+    .search-box:hover {
       background-color: #f0f0f0;
     }
 
-    /* REAL magnifying glass (CSS) */
-    .magnifier {
-      position: relative;
-      width: 20px;
-      height: 20px;
+    .search-box.active {
+      width: 220px;
     }
 
-    /* Glass */
+    .search-input {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      flex: 1;
+      background: transparent;
+      padding: 0 8px;
+      display: none;
+    }
+
+    .search-box.active .search-input {
+      display: block;
+    }
+
+    /* Magnifying glass */
+    .magnifier {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      margin-left: 10px;
+      margin-right: 6px;
+    }
+
     .magnifier::before {
       content: "";
+      width: 12px;
+      height: 12px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      background: #fff;
       position: absolute;
       top: 0;
       left: 0;
-      width: 14px;
-      height: 14px;
-      border: 2px solid #000000;
-      border-radius: 50%;
-      background-color: #ffffff;
     }
 
-    /* Handle */
     .magnifier::after {
       content: "";
+      width: 2px;
+      height: 8px;
+      background: #000;
       position: absolute;
-      width: 3px;
-      height: 9px;
-      background-color: #000000;
-      bottom: -1px;
-      right: -1px;
+      top: 10px;
+      left: 11px;
       transform: rotate(45deg);
-      border-radius: 1px;
+      transform-origin: top;
     }
 
-    /* Center title */
+    /* Title */
     .news-title {
       font-family: "Zilla Slab", serif;
       font-size: 60px;
       font-weight: 700;
-      color: #000000;
       text-align: center;
       flex: 1;
-      margin: 0 20px;
     }
 
-    /* Right actions */
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* Login button */
+    /* Login */
     .login-btn {
       background-color: #1a73e8;
-      color: #ffffff;
+      color: #fff;
       font-family: Arial, Helvetica, sans-serif;
       font-weight: bold;
       font-size: 16px;
@@ -136,33 +138,45 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
     }
 
     .login-btn:hover {
       background-color: #1669c1;
     }
 
-    /* Spacer content */
-    .content {
-      height: 300vh;
+    /* Language selector */
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    .language-selector span {
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    .language-selector span.active {
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Advertisement -->
   <div class="ad-box">
     Contact domtom3401 to have your advertisement displayed here
   </div>
 
-  <!-- Header -->
   <div class="info-title-container">
     <div class="top-left-info">
 
-      <div class="top-left-search" title="Search">
+      <div class="search-box" id="searchBox">
         <div class="magnifier"></div>
+        <input type="text" class="search-input" placeholder="Search..." />
       </div>
 
       <div id="date">Date: --/--/----</div>
@@ -171,16 +185,42 @@
 
     <h1 class="news-title">The ATC24 News</h1>
 
-    <div class="header-actions">
-      <button class="login-btn">LOG IN</button>
-    </div>
+    <button class="login-btn">LOG IN</button>
   </div>
 
-  <div class="content"></div>
+  <!-- Language selector -->
+  <div class="language-selector">
+    <span class="active">English</span>
+    <span>Dutch</span>
+    <span>German</span>
+  </div>
 
   <script>
+    // Date
     document.getElementById("date").textContent =
       "Date: " + new Date().toLocaleDateString();
+
+    // Search box
+    const searchBox = document.getElementById("searchBox");
+    const searchInput = searchBox.querySelector(".search-input");
+
+    searchBox.addEventListener("click", () => {
+      searchBox.classList.add("active");
+      searchInput.focus();
+    });
+
+    searchInput.addEventListener("blur", () => {
+      searchBox.classList.remove("active");
+    });
+
+    // Language selector
+    document.querySelectorAll(".language-selector span").forEach(lang => {
+      lang.addEventListener("click", () => {
+        document.querySelectorAll(".language-selector span")
+          .forEach(l => l.classList.remove("active"));
+        lang.classList.add("active");
+      });
+    });
   </script>
 
 </body>
