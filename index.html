@@ -106,7 +106,6 @@ body { font-family: Georgia, "Times New Roman", Times, serif; background: #fff; 
 /* Vertical line for 4th section */
 .vertical-divider {
   position: absolute;
-  top: 0; /* Will be adjusted in JS */
   width: 1px;
   background: #000;
 }
@@ -217,8 +216,8 @@ window.addEventListener("load", () => {
   const horizontalLineRect = headerLineDup.getBoundingClientRect();
   const pageWidth = document.body.clientWidth;
   verticalDivider.style.left = (pageWidth * 0.75) + "px"; // 4th vertical section
-  verticalDivider.style.top = horizontalLineRect.bottom + "px"; // start BELOW horizontal line
-  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.bottom) + "px"; // extend downwards
+  verticalDivider.style.top = horizontalLineRect.top + "px"; // **top aligns exactly with horizontal line**
+  verticalDivider.style.height = (document.body.scrollHeight - horizontalLineRect.top) + "px"; // extend downwards
 });
 
 /* Date */
